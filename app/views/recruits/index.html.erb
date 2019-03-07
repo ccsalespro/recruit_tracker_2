@@ -1,0 +1,56 @@
+<div class="row" style="padding-left: 10px; padding-right: 10px;">
+<div class="col-sm-0 col-md-4"></div>
+<%= link_to 'New Recruit', new_recruit_path, class: "col-md-12 col-lg-4 btn btn-nav btn-rounded btn-primary-outline" %>
+</div>
+<br>
+
+<div class="card">
+	<div class="card-body">
+		<%= form_for @search_recruits, url: recruits_path, method: :get do |f| %>
+			<%= f.label 'Search' %>
+			<%= f.text_field :q, class: 'form-control' %>
+			<div class="checkbox mt-2">
+			  <label>
+			   <%= f.check_box :closed %>
+			   <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+			   Show Closed
+			   </label>
+			</div>
+			<%= f.submit "Search", class: "btn btn-primary" %>
+		<% end %>
+	</div>
+</div>
+
+<% if @recruits.count == 0 %>
+	<h4 class="m-0 p-2">No Recruits Matching Search</h4>
+<% end %>
+
+<div class="row">
+	<div class="card-columns">
+		<% @recruits.each do |recruit| %>
+			<% current_task = recruit.tasks.where(completed_at: nil).first %>
+			<div class="card searchable">
+				<div class="card-body">
+					<h2 class="m-0"><%= recruit.name %></h2>
+					<h4 class="m-0 mb-2"><span class="badge badge-pill badge-success"><%= number_to_percentage(recruit.percent_complete, precision: 0) %> Completed</span></h4>
+					<p class="m-0"><b>Phone:</b> <%= recruit.phone_number %></p>
+					<p class="m-0 mb-2"><b>Description:</b> <%= recruit.description.truncate(100) %></p>
+
+					<hr class="mt-2 mb-2">
+
+					<p class="m-0 mb-1">
+						<b>Current Task: </b>
+						<% if current_task != nil %>
+							<%= current_task.name %>
+							<br>Due <%= current_task.due_date.strftime("%B %d, %Y") %><br>
+						<% else %>
+							<h3><b style="color: red;">No Task!</b></h3>
+						<% end -%>
+					</p>
+
+					<%= link_to "View", recruit_path(recruit) %>
+				</div>
+			</div>
+		<% end %>
+	</div>
+</div>

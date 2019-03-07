@@ -1,0 +1,44 @@
+<%= form_for(@recruit) do |form| %>
+  <% if recruit.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(recruit.errors.count, "error") %> prohibited this recruit from being saved:</h2>
+
+      <ul>
+      <% recruit.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name, class: 'form-control', required: true %><br>
+
+    <%= form.label :phone_number %>
+    <%= form.phone_field :phone_number, class: 'form-control', required: true, value: params[:phone_number] %><br>
+
+    <%= form.label :email %>
+    <%= form.email_field :email, class: 'form-control', required: true %><br>
+
+    <%= form.label :description %>
+    <%= form.text_area :description, class: 'form-control', required: true %><br>
+
+    <%= form.label :start_date %>
+    <%= form.date_field :start_date, class: 'form-control', required: true %><br>
+
+    <% if current_page?(action: 'new') %>
+      <h2>Create A Task</h2>
+      <%= form.fields_for :tasks do |task_form| %>
+        <%= task_form.label :name %>
+        <%= task_form.text_field :name, class: 'form-control', required: true %><br>
+        <%= task_form.label :due_date %>
+        <%= task_form.date_field :due_date, class: 'form-control', required: true %><br>
+      <% end %>
+    <% end -%>
+
+  </div>
+
+  <center><%= form.submit "Save", class: 'col-sm-12 col-md-4 btn btn-nav btn-rounded btn-success-outline' %></center><br><br>
+
+<% end %>

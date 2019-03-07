@@ -1,0 +1,19 @@
+<h2>General Messages</h2>
+
+<div class="row">
+	<div class="card-columns">
+		<% @general_messages.each do |general_message| %>
+			<div class="card">
+				<div class="card-body">
+					<h2 class="m-0"><%= general_message.number %></h2>
+					<p class="m-0 mb-2"><b>Message:</b> <%= general_message.body %></p>
+
+					<%= link_to new_recruit_path(:phone_number => general_message.number), class: 'pt-2' do %>
+						<i class="fas fa-plus-circle"></i>
+						Make New Recruit
+					<% end %>
+				</div>
+			</div>
+		<% end %>
+	</div>
+</div>

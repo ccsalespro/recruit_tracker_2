@@ -1,0 +1,53 @@
+<div class="tabs-section-nav">
+  <div class="tbl">
+    <ul class="nav" role="tablist">
+
+      <li class="nav-item">
+        <%= link_to @recruit, class: "nav-link" do %>
+          <span class="nav-link-in">
+            Details
+          </span>
+        <% end %>
+      </li>
+
+      <li class="nav-item">
+        <%= link_to recruit_path(@recruit, tab: 'uncomplete_tasks'), class: "nav-link" do %>
+          <span class="nav-link-in">
+            Uncomplete Tasks <span class="badge badge-pill badge-danger"><%= @uncomplete_tasks.count %></span>
+          </span>
+        <% end %>
+      </li>
+
+      <li class="nav-item">
+        <%= link_to recruit_path(@recruit, tab: 'complete_tasks'), class: "nav-link active" do %>
+          <span class="nav-link-in">
+            Complete Tasks <span class="badge badge-pill badge-danger"><%= @complete_tasks.count %></span>
+          </span>
+        <% end %>
+      </li>
+
+    </ul>
+  </div>
+</div><!--.tabs-section-nav-->
+
+<div class="tab-content p-3" style="border-left: 1px solid #e0e0e0; border-right: 1px solid #e0e0e0; border-bottom: 1px solid #e0e0e0;">
+  <% if @complete_tasks.count == 0 %>
+    <h4 class="m-0 p-2">No Complete Tasks</h4>
+  <% end %>
+  <div class="row">
+    <% @complete_tasks.each do |task| %>
+      <%= tag.div id: dom_id(task), class: 'col-md-8 col-lg-6' do %>
+        <div class="card mb-2">
+          <div class="card-body">
+            <h5 class="m-0"><b><%= task.name %></b></h5>
+            <p class="m-0">Due <%= task.due_date.strftime("%B %d, %Y") %></p>
+            <%= link_to uncomplete_recruit_task_path(@recruit, task) do %>
+              <i class="fas fa-times-circle"></i>
+              Mark Uncomplete
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>

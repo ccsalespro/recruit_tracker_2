@@ -1,0 +1,36 @@
+<div class="tabs-section-nav">
+  <div class="tbl">
+    <ul class="nav" role="tablist">
+
+      <li class="nav-item">
+        <%= link_to @recruit, class: "nav-link active" do %>
+          <span class="nav-link-in">
+            Details
+          </span>
+        <% end %>
+      </li>
+
+      <li class="nav-item">
+        <%= link_to recruit_path(@recruit, tab: 'uncomplete_tasks'), class: "nav-link" do %>
+          <span class="nav-link-in">
+            Uncomplete Tasks <span class="badge badge-pill badge-danger"><%= @uncomplete_tasks.count %></span>
+          </span>
+        <% end %>
+      </li>
+
+      <li class="nav-item">
+        <%= link_to recruit_path(@recruit, tab: 'complete_tasks'), class: "nav-link" do %>
+          <span class="nav-link-in">
+            Complete Tasks <span class="badge badge-pill badge-danger"><%= @complete_tasks.count %></span>
+          </span>
+        <% end %>
+      </li>
+
+    </ul>
+  </div>
+</div>
+
+<div class="tab-content p-3" style="border-left: 1px solid #e0e0e0; border-right: 1px solid #e0e0e0; border-bottom: 1px solid #e0e0e0;">
+  <p class="m-0"><b>Phone:</b> <%= @recruit.phone_number %></p>
+  <p class="m-0 mb-2"><b>Description:</b> <%= @recruit.description %></p>
+</div>

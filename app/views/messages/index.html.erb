@@ -1,0 +1,22 @@
+<script type="text/javascript">$('html,body').animate({scrollTop: document.body.scrollHeight + 10000},"fast");</script>
+
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><%= link_to "Home", root_path %></li>
+    <li class="breadcrumb-item"><%= link_to @recruit.name.titleize, recruit_path(@recruit) %></li>
+    <li class="breadcrumb-item active" aria-current="page">Messages</li>
+  </ol>
+</nav>
+
+<div class="card" style="padding: 10px;">
+	<div class="card-block">
+		<% @messages.each do |message| %>
+      <%= tag.div class: (if message.from_recruit then 'message-container-recruit' else 'message-container' end) do %>
+        <%= tag.div class: (if message.from_recruit then 'message-by-recruit' else 'message' end) do %>
+          <% if message.from_recruit %><%= message.body %><% else %><span class="pull-right"><%= message.body %></span><% end -%>
+        <% end %>
+      <% end %>
+		<% end -%>
+		<%= render 'form', message: @message %>
+	</div>
+</div>
